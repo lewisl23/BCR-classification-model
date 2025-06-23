@@ -8,4 +8,4 @@ filtered_airr_data.csv
 feature_data.csv
 v_transformed.csv
 j_transformed.csv
-featurised_data.csv
+sequence_feature_data.csv
