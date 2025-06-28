@@ -9,3 +9,13 @@ feature_data.csv
 v_transformed.csv
 j_transformed.csv
 sequence_feature_data.csv
+training_testing_dataset/X_test_v.csv
+training_testing_dataset/X_test.csv
+training_testing_dataset/X_train_v.csv
+training_testing_dataset/X_train.csv
+training_testing_dataset/y_test_v.csv
+training_testing_dataset/y_test.csv
+training_testing_dataset/y_train_v.csv
+training_testing_dataset/y_train.csv
+exploratory_and_data_cleaning/RA_data.airr.csv
+exploratory_and_data_cleaning/control_data.airr.csv
