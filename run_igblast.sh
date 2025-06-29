@@ -1,7 +1,7 @@
 
 ################################################################################
 #                                                                              #
-#     igBLAST analysis to analyse BCR sequences adn out oput as AIRR format    #
+#     igBLAST analysis to analyse BCR sequences and output as AIRR format    #
 #                                                                              #
 ################################################################################
 
