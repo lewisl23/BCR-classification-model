@@ -3,7 +3,6 @@
 /control_data.airr.csv
 atchley_features.csv
 filtered_airr_data.csv
-/OGRDB_reads
 v_transformed.csv
 j_transformed.csv
 sequence_feature_data.csv
@@ -17,3 +16,6 @@ training_testing_dataset/y_train_v.csv
 training_testing_dataset/y_train.csv
 exploratory_and_data_cleaning/RA_data.airr.csv
 exploratory_and_data_cleaning/control_data.airr.csv
+/OGRDB_reads
+
+
