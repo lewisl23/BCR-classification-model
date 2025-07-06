@@ -1,7 +1,7 @@
 
 ################################################################################
 #                                                                              #
-#     igBLAST analysis to analyse BCR sequences and output as AIRR format    #
+#     igBLAST analysis to analyse BCR sequences and output as AIRR format      #
 #                                                                              #
 ################################################################################
 
@@ -18,6 +18,6 @@ do
   $IGDATA/bin/igblastn -query ./presto_output/${sample_id}_collapse-unique.fasta  \
   -germline_db_V $IGDATA/OGRDB/Homo_sapiens_IGH_V -germline_db_D $IGDATA/OGRDB/Homo_sapiens_IGH_D \
   -germline_db_J $IGDATA/OGRDB/Homo_sapiens_IGH_J -organism human -ig_seqtype Ig \
-  -auxiliary_data $IGDATA/OGRDB/Homo_sapiens_IGH.aux -out ./OGRDB_airr_reads/${sample_id}.airr.tsv -outfmt 19 -num_threads 50
+  -auxiliary_data $IGDATA/OGRDB/Homo_sapiens_IGH.aux -out ./OGRDB_reads/${sample_id}.airr.tsv -outfmt 19 -num_threads 50
 
 done
