@@ -1,0 +1,9 @@
+{
+  "batch_size": 128,
+  "layer_1_size": 256,
+  "layer_2_size": 512,
+  "layer_3_size": 256,
+  "layer_4_size": 64,
+  "lr": 0.00034945360558765565,
+  "n_layers": 4
+}

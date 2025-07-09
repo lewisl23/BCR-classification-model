@@ -19,3 +19,5 @@ exploratory_and_data_cleaning/control_data.airr.csv
 /OGRDB_reads
 
 
+training_testing_dataset/X_validate.csv
+training_testing_dataset/y_validate.csv
