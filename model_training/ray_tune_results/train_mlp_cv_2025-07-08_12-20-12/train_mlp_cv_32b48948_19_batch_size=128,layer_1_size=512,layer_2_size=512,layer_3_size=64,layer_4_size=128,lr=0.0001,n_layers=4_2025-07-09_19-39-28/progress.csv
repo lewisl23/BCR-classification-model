@@ -1,0 +1,2 @@
+val_loss,accuracy,f1_score,timestamp,checkpoint_dir_name,done,training_iteration,trial_id,date,time_this_iter_s,time_total_s,pid,hostname,node_ip,time_since_restore,iterations_since_restore
+0.552863073348999,0.6665061430623054,0.6638959813097783,1752095204,,False,1,32b48948,2025-07-09_21-06-44,5233.926648139954,5233.926648139954,3804855,tisha,129.215.170.52,5233.926648139954,1
