@@ -14,19 +14,19 @@ from sklearn.metrics import f1_score, accuracy_score
 import torch.nn.functional as F
 
 # Import training and testing sets
-X_train = pd.read_csv("./training_testing_dataset/X_train.csv")
-y_train = pd.read_csv("./training_testing_dataset/y_train.csv").squeeze()
+X_train = pd.read_csv("/home/s2106664/msc_project/training_testing_dataset/X_train.csv")
+y_train = pd.read_csv("/home/s2106664/msc_project/training_testing_dataset/y_train.csv").squeeze()
 
 
 class MLP(nn.Module):
-    def __init__(self, input_dim, output_dim, layer_sizes):
+    def __init__(self, input_dim, layer_sizes):
         super().__init__()
         layers = []
         prev = input_dim
         for h in layer_sizes:
             layers += [nn.Linear(prev, h), nn.LeakyReLU(negative_slope=0.01)]
             prev = h
-        layers.append(nn.Linear(prev, output_dim))
+        layers.append(nn.Linear(prev, 1))
         self.net = nn.Sequential(*layers)
 
     def forward(self, x):
@@ -48,6 +48,7 @@ def train_mlp_cv(config, data=None):
     val_losses = []
     val_accuracies = []
     val_f1s = []
+    criterion = nn.BCEWithLogitsLoss()
 
     for train_idx, val_idx in kf.split(X_np, y):
         X_train_df, X_val_df = X.iloc[train_idx].copy(), X.iloc[val_idx].copy()
@@ -69,9 +70,9 @@ def train_mlp_cv(config, data=None):
         
         # load datatset into GPU
         X_train = torch.tensor(X_train_scaled, dtype=torch.float32)
-        y_train = torch.tensor(y_train, dtype=torch.long)
+        y_train = torch.tensor(y_train, dtype=torch.float32).unsqueeze(1)
         X_val = torch.tensor(X_val_scaled, dtype=torch.float32).to(device)
-        y_val = torch.tensor(y_val, dtype=torch.long).to(device)
+        y_val = torch.tensor(y_val, dtype=torch.float32).unsqueeze(1).to(device)
 
         train_dataset = torch.utils.data.TensorDataset(X_train, y_train)
         train_loader = torch.utils.data.DataLoader(train_dataset,
@@ -87,8 +88,9 @@ def train_mlp_cv(config, data=None):
         if config["n_layers"] == 4:
             layers.append(config["layer_4_size"])
 
-        model = MLP(input_dim=X.shape[1], output_dim=len(set(y)), layer_sizes=layers).to(device)
+        model = MLP(input_dim=X.shape[1], layer_sizes=layers).to(device)
         optimizer = torch.optim.Adam(model.parameters(), lr=config["lr"])
+
 
         best_val_loss = float("inf")
         patience = 5
@@ -101,7 +103,7 @@ def train_mlp_cv(config, data=None):
                 yb = yb.to(device)
                 optimizer.zero_grad()
                 out = model(xb)
-                loss = F.cross_entropy(out, yb)
+                loss = criterion(out, yb.float())
                 loss.backward()
                 optimizer.step()
 
@@ -110,12 +112,14 @@ def train_mlp_cv(config, data=None):
             model.eval()
             with torch.no_grad():
                 val_out = model(X_val)
-                val_loss = F.cross_entropy(val_out, y_val).item()
-                preds = torch.argmax(val_out, dim=1).cpu().numpy()
-                true = y_val.cpu().numpy()
+                val_loss = criterion(val_out, y_val).item()
+                probs = torch.sigmoid(val_out).cpu().numpy()
+                preds = (probs > 0.5).astype(int).squeeze()
+                true = y_val.cpu().numpy().astype(int).squeeze()
                 acc = accuracy_score(true, preds)
                 f1 = f1_score(true, preds, average="weighted")
-            
+
+
             print(f"Epoch number {epoch} completed")
 
             # early stopper if patience reached
@@ -162,13 +166,14 @@ search_space = {
 }
 
 
+
 tune.run(
     tune.with_parameters(train_mlp_cv, data=(X_train, y_train)),
     config=search_space,
-    num_samples=25,
+    num_samples=10,
     scheduler=ASHAScheduler(metric="val_loss", mode="min"),
     search_alg=OptunaSearch(metric="val_loss", mode="min"),
-    resources_per_trial={"cpu": 1, "gpu": 0.33},
-    max_concurrent_trials=3,
-    storage_path="./ray_tune_results"
+    resources_per_trial={"cpu": 2, "gpu": 0.5},
+    max_concurrent_trials=2,
+    storage_path="/home/s2106664/msc_project/model_training/ray_tune_results"
 )

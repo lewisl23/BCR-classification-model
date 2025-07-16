@@ -78,7 +78,7 @@ def train_and_save_model(X_train_data, y_train_data, X_validate_data, y_validate
     # save the best model
     best_model = None
 
-    for epoch in range(1, 251):
+    for epoch in range(1, 101):
         model.train()
         epoch_train_loss = 0.0
         for xb, yb in train_loader:
