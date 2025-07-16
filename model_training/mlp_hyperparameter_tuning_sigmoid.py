@@ -52,7 +52,6 @@ def train_mlp_cv(config, data=None):
 
     for train_idx, val_idx in kf.split(X_np, y):
         X_train_df, X_val_df = X.iloc[train_idx].copy(), X.iloc[val_idx].copy()
-        #X_train, X_val = X[train_idx], X[val_idx]
         y_train, y_val = y[train_idx], y[val_idx]
 
         # scalling the datasets
@@ -69,12 +68,12 @@ def train_mlp_cv(config, data=None):
         X_val_scaled = np.array(X_val_scaled)
         
         # load datatset into GPU
-        X_train = torch.tensor(X_train_scaled, dtype=torch.float32)
-        y_train = torch.tensor(y_train, dtype=torch.float32).unsqueeze(1)
-        X_val = torch.tensor(X_val_scaled, dtype=torch.float32).to(device)
-        y_val = torch.tensor(y_val, dtype=torch.float32).unsqueeze(1).to(device)
+        X_train_tensor = torch.tensor(X_train_scaled, dtype=torch.float32)
+        y_train_tensor = torch.tensor(y_train, dtype=torch.float32).unsqueeze(1)
+        X_val_tensor = torch.tensor(X_val_scaled, dtype=torch.float32).to(device)
+        y_val_tensor = torch.tensor(y_val, dtype=torch.float32).unsqueeze(1).to(device)
 
-        train_dataset = torch.utils.data.TensorDataset(X_train, y_train)
+        train_dataset = torch.utils.data.TensorDataset(X_train_tensor, y_train_tensor)
         train_loader = torch.utils.data.DataLoader(train_dataset,
                                                    batch_size=config["batch_size"],
                                                    shuffle=True)
@@ -111,11 +110,11 @@ def train_mlp_cv(config, data=None):
             # Validation
             model.eval()
             with torch.no_grad():
-                val_out = model(X_val)
-                val_loss = criterion(val_out, y_val).item()
+                val_out = model(X_val_tensor)
+                val_loss = criterion(val_out, y_val_tensor).item()
                 probs = torch.sigmoid(val_out).cpu().numpy()
                 preds = (probs > 0.5).astype(int).squeeze()
-                true = y_val.cpu().numpy().astype(int).squeeze()
+                true = y_val_tensor.cpu().numpy().astype(int).squeeze()
                 acc = accuracy_score(true, preds)
                 f1 = f1_score(true, preds, average="weighted")
 
