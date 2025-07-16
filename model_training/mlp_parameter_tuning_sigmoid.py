@@ -22,7 +22,7 @@ class MLP(nn.Module):
             nn.LeakyReLU(negative_slope=0.01),
             nn.Linear(512, 512),
             nn.LeakyReLU(negative_slope=0.01),
-            nn.Linear(512,256),
+            nn.Linear(512, 256),
             nn.LeakyReLU(negative_slope=0.01),
             nn.Linear(256, 512),
             nn.LeakyReLU(negative_slope=0.01),
@@ -57,10 +57,10 @@ def train_and_save_model(X_train_data, y_train_data, X_validate_data, y_validate
     joblib.dump(scaler, "scaler.pkl")
 
     # Convert to tensors
-    X_train_tensor = torch.tensor(X_train_scaled, dtype=torch.float32)
-    y_train_tensor = torch.tensor(y_train, dtype=torch.float32).unsqueeze(1)
-    X_val_tensor = torch.tensor(X_val_scaled, dtype=torch.float32).to(device)
-    y_val_tensor = torch.tensor(y_validate, dtype=torch.float32).unsqueeze(1).to(device)
+    X_train_tensor = torch.tensor(X_train_scaled.values, dtype=torch.float32)
+    y_train_tensor = torch.tensor(y_train.values, dtype=torch.float32).unsqueeze(1)
+    X_val_tensor = torch.tensor(X_val_scaled.values, dtype=torch.float32).to(device)
+    y_val_tensor = torch.tensor(y_validate.values, dtype=torch.float32).unsqueeze(1).to(device)
 
     # DataLoader
     train_dataset = TensorDataset(X_train_tensor, y_train_tensor)
