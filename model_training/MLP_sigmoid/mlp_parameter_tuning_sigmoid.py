@@ -132,7 +132,7 @@ train_loss, val_loss = train_and_save_model(X_train_data=X_train,
                                             y_validate_data=y_validate,
                                             batch_size=128,
                                             learning_rate=0.00010713088988814973,
-                                            save_path="/home/s2106664/msc_project/model_training/best_mlp_sigmoid_model.pth")
+                                            save_path="/home/s2106664/msc_project/model_training/MLP_sigmoid/best_mlp_sigmoid_model.pth")
 
 # Save the train loss and validation loss
 train_validation_losses_df = pd.DataFrame({
@@ -140,5 +140,5 @@ train_validation_losses_df = pd.DataFrame({
     "train_loss": train_loss,
     "val_loss": val_loss
 })
-train_validation_losses_df.to_csv("/home/s2106664/msc_project/model_training/mlp_train_validation_losses_sigmoid.csv", index=False)
+train_validation_losses_df.to_csv("/home/s2106664/msc_project/model_training/MLP_sigmoid/mlp_train_validation_losses_sigmoid.csv", index=False)
 print("Train and validation losses saved to mlp_train_validation_losses_sigmoid.csv")

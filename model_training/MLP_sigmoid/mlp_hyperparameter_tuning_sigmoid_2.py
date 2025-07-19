@@ -155,24 +155,23 @@ def train_mlp_cv(config, data=None):
 # Create search space
 
 search_space = {
-    "n_layers": tune.choice([3, 4]),
-    "layer_1_size": tune.choice([512, 256, 128, 64]),
-    "layer_2_size": tune.choice([512, 256, 128, 64]),
+    "n_layers": tune.choice([4]),
+    "layer_1_size": tune.choice([512]),
+    "layer_2_size": tune.choice([512]),
     "layer_3_size": tune.choice([512, 256, 128, 64]),
     "layer_4_size": tune.choice([512, 256, 128, 64]),
-    "lr": tune.loguniform(1e-4, 1e-2),
-    "batch_size": tune.choice([32, 64, 128])
+    "lr": tune.loguniform(9e-5, 5e-4),
+    "batch_size": tune.choice([128])
 }
-
 
 
 tune.run(
     tune.with_parameters(train_mlp_cv, data=(X_train, y_train)),
     config=search_space,
-    num_samples=10,
+    num_samples=20,
     scheduler=ASHAScheduler(metric="val_loss", mode="min"),
     search_alg=OptunaSearch(metric="val_loss", mode="min"),
-    resources_per_trial={"cpu": 2, "gpu": 0.5},
+    resources_per_trial={"cpu": 4, "gpu": 0.5},
     max_concurrent_trials=2,
-    storage_path="/home/s2106664/msc_project/model_training/ray_tune_results"
+    storage_path="/home/s2106664/msc_project/model_training/MLP_sigmoid/ray_tune_results"
 )
