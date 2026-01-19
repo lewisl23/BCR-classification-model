@@ -206,3 +206,7 @@ model_training/logistic_regression/logistic_training_loss.png
 model_training/MLP_sigmoid/MLP_loss_curve.png
 model_training/logistic_regression/logistic_training_loss.png
 model_training/MLP_sigmoid/MLP_loss_curve.png
+reads_processing_pipeline/raw_reads/A0001_1.fastq
+reads_processing_pipeline/raw_reads/A0001_2.fastq
+reads_processing_pipeline/raw_reads/B1168_1.fastq
+reads_processing_pipeline/raw_reads/B1168_2.fastq
