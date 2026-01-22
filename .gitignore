@@ -213,3 +213,4 @@ reads_processing_pipeline/raw_reads/B1168_2.fastq
 reads_processing_pipeline/igblast/OGRDB
 reads_processing_pipeline/presto/presto_output/A0001_collapse-unique.fasta
 reads_processing_pipeline/presto/presto_output/B1168_collapse-unique.fasta
+.ipynb_checkpoints
