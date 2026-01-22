@@ -18,7 +18,6 @@ jobs:
 
       - name: Test container runs
         run: |
-          docker run --rm ghcr.io/lewisl23/presto-0.7.4:latest
-          AssemblePairs.py --help
+          docker run --rm ghcr.io/lewisl23/presto-0.7.4:latest AssemblePairs.py --help
           echo "Container works"
         
