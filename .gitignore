@@ -206,3 +206,5 @@ model_training/logistic_regression/logistic_training_loss.png
 model_training/MLP_sigmoid/MLP_loss_curve.png
 model_training/logistic_regression/logistic_training_loss.png
 model_training/MLP_sigmoid/MLP_loss_curve.png
+.ipynb_checkpoints
+reads_processing_pipeline
