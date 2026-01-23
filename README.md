@@ -9,7 +9,8 @@ Steps of the project:
 
 ## 1. reads_processing_pipeline
 - PRESTO analysis of Illumina raw reads
-- IgBLAST analysis of quality-controlled alligned reads \
+- IgBLAST analysis of quality-controlled alligned reads 
+
 The reads proccessing pipeline is created using presto (version 0.7.4) and igblast 
 (version 1.21.0) with OGRDB database (version 9). These tools are organised into a pipeline using snakemake with docker image acccess containing required tools and daatabse for reproducibility. 
 
