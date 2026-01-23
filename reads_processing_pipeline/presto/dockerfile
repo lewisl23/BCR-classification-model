@@ -1,0 +1,17 @@
+FROM python:3.9-slim
+
+# Install system dependencies needed by pRESTO
+RUN apt-get update && apt-get install -y \
+    git \
+    build-essential \
+    zlib1g-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install pRESTO version 0.7.4
+RUN pip install presto==0.7.4
+
+# Set working directory
+WORKDIR /
+
+# Default command (Snakemake overrides this)
+CMD ["bash"]

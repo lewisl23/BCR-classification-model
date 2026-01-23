@@ -1,0 +1,30 @@
+name: Test GHCR Container
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test-container:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with: 
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pull container from GHCR
+        run: |
+          docker pull ghcr.io/lewisl23/presto-0.7.4:latest
+
+      - name: Test container runs
+        run: |
+          docker run --rm ghcr.io/lewisl23/presto-0.7.4:latest AssemblePairs.py --help
+          echo "Container works"
+        
